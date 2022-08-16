@@ -21,10 +21,5 @@ public class Comment {
     private String body;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
     private Post post;
-
-
-
-
 }
