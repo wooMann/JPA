@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +27,14 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    public void addPosts(Post post){
+        post.setUser(this);
+        this.posts.add(post);
+    }
 
 
 
