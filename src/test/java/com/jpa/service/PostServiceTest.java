@@ -42,10 +42,6 @@ public class PostServiceTest {
         post.addComments(comment);
 
         commentService.createComment(comment);
-
-
-
-
     }
 
 }

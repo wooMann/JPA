@@ -3,6 +3,8 @@ package com.jpa.service;
 import com.jpa.entity.User;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 
@@ -31,5 +33,24 @@ public class UserServiceTest {
         assertEquals(User.class,user.getClass());
         assertEquals(user,result);
     }
+
+    @Test
+    public void findByIdSuccess(){
+        User user = new User();
+        user.setId(1);
+        Optional<User> result = userService.findById(user);
+        assertTrue(result.isPresent());
+    }
+
+    @Test
+    public void findByIdFail(){
+        User user = new User();
+        user.setId(5565);
+        Optional<User> result = userService.findById(user);
+        assertFalse(result.isPresent());
+    }
+
+
+
 
 }

@@ -5,6 +5,7 @@ import com.jpa.util.HibernateUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import java.util.Optional;
 
 public class JPADAO<E> {
     protected EntityManagerFactory entityManagerFactory = HibernateUtil.getEntityManagerFactory();
@@ -43,15 +44,11 @@ public class JPADAO<E> {
         return entity;
     }
 
-    public E find(Class<E> type, Object id) {
+    public Optional<E> find(Class<E> type, Object id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        E entity = entityManager.find(type, id);
+        Optional<E> entity = Optional.ofNullable(entityManager.find(type, id));
         entityManager.close();
-        if (entity == null) {
-            return null;
-        } else {
-            return entity;
-        }
+        return entity;
     }
 
     public boolean delete(Class<E> type, Object id) {
@@ -60,7 +57,6 @@ public class JPADAO<E> {
 
         try {
             Object references = entityManager.getReference(type, id);
-            //Object entity = entityManager.find(type,id);
             entityTransaction.begin();
             entityManager.remove(references);
             entityTransaction.commit();
